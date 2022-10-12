@@ -9,7 +9,6 @@ const styles = StyleSheet.create({
   },
 });
 
-const Tab = createBottomTabNavigator();
 function Map({ navigation }) {
   const [mapWidth, setMapWidth] = useState('99%');
   const [location, setLocation] = useState(null);
