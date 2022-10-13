@@ -4,11 +4,12 @@ import {
   useCameraPermissions,
 } from 'expo-image-picker';
 import { Camera } from 'expo-camera';
-import { Alert, Button, View } from 'react-native';
+import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
 import * as Permissions from 'expo-permissions';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 const ImagePicker = () => {
+  const [pickedImage, setPickedImage] = useState(null);
   // 카메라 권한 받아오기
   useEffect(() => {
     async () => {
@@ -27,13 +28,34 @@ const ImagePicker = () => {
       quality: 0.5,
     });
     console.log(image);
+    setPickedImage(image.uri);
+  }
+  let imagePreview = <Text>이미지</Text>;
+
+  if (pickedImage) {
+    imagePreview = <Image style={styles.img} source={{ uri: pickedImage }} />;
   }
   return (
     <View>
-      <View></View>
+      <View style={styles.imgView}>{imagePreview}</View>
       <Button title="촬영" onPress={takeImageHandler} />
     </View>
   );
 };
+
+const styles = StyleSheet.create({
+  imgView: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 20,
+    height: 200,
+    width: '100%',
+    marginVertical: 8,
+  },
+  img: {
+    width: '100%',
+    height: '100%',
+  },
+});
 
 export default ImagePicker;
