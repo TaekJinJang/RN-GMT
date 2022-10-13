@@ -4,13 +4,11 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
 import Styled from 'styled-components/native';
-import Map from './component/Map';
+import Map from './screens/Map';
+import AllPlaces from './screens/AllPlaces';
+import AddPlace from './screens/AddPlace';
 
 const Tab = createBottomTabNavigator();
-
-function HomeScreen() {
-  return <Text>asd</Text>;
-}
 
 function NotificationScreen() {
   return <Text>Notification</Text>;
@@ -26,7 +24,7 @@ const App = () => {
       <Tab.Navigator initialRouteName="Home">
         <Tab.Screen
           name="Home"
-          component={HomeScreen}
+          component={AllPlaces}
           options={{
             title: '홈',
             tabBarIcon: ({ color, size }) => (
@@ -46,12 +44,12 @@ const App = () => {
           }}
         />
         <Tab.Screen
-          name="Notification"
-          component={NotificationScreen}
+          name="Add"
+          component={AddPlace}
           options={{
-            title: '검색',
+            title: '맛집 추가',
             tabBarIcon: ({ color, size }) => (
-              <Icon name="search" color={color} size={size} />
+              <Icon name="add" color={color} size={size} />
             ),
           }}
         />
