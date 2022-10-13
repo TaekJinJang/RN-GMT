@@ -28,6 +28,14 @@
         "backgroundColor": "#FFFFFF"
       }
     },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "The app needs access to your camera in order to take photos of your favorite places!"
+        }
+      ]
+    ],
     "web": {
       "favicon": "./assets/favicon.png"
     }
