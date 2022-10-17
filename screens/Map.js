@@ -1,18 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { Text, View, StyleSheet, Dimensions } from 'react-native';
-const styles = StyleSheet.create({
-  mapStyle: {
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
-  },
-});
+import { Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
+import IconBtn from '../component/UI/IconBtn';
 
 function Map({ navigation }) {
   const [mapWidth, setMapWidth] = useState('99%');
-  const [location, setLocation] = useState(null);
-  const [errorMsg, setErrorMsg] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState(null);
   const [initialRegion, setInitialRegion] = useState({
     latitude: 35.91395373474155,
     longitude: 127.73829440215488,
@@ -29,25 +23,48 @@ function Map({ navigation }) {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('사용자의 위치 권한을 얻지 못했습니다.');
+        Alert('사용자의 위치 권한을 얻지 못했습니다.');
         return;
       }
-
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
     })();
   }, []);
 
-  let text = 'Waiting..';
-  if (errorMsg) {
-    text = errorMsg;
-  } else if (location) {
-    text = JSON.stringify(location);
-    console.log('[LOG] current location : ' + text);
-  }
+  // 마커 위치를 Addplace 페이지로 넘겨주기
+  useEffect(() => {
+    navigation.setOptions({
+      headerRight: ({ tintColor }) => (
+        <IconBtn
+          icon="save"
+          size={24}
+          color={tintColor}
+          onPress={savePickedLocationHandler}
+        />
+      ),
+    });
+  }, [selectedLocation]);
+
+  // 터치로 위치 경도 받아오기
+  const selectLocationHandler = (event) => {
+    const lat = event.nativeEvent.coordinate.latitude;
+    const lng = event.nativeEvent.coordinate.longitude;
+    setSelectedLocation({ lat: lat, lng: lng });
+  };
+  // 받은 위치를 Add 컴포넌트로 넘겨주기
+  const savePickedLocationHandler = useCallback(() => {
+    if (!selectedLocation) {
+      Alert.alert('선택된 위치 없음!', '지도를 터치하여 위치를 선택해주세요');
+      return;
+    }
+    navigation.navigate('Add', {
+      pickedLat: selectedLocation.lat,
+      pickedLng: selectedLocation.lng,
+    });
+  }, [selectedLocation]);
+
   return (
     <>
       <MapView
+        onPress={selectLocationHandler}
         style={styles.mapStyle}
         initialRegion={initialRegion}
         provider={PROVIDER_GOOGLE}
@@ -58,11 +75,12 @@ function Map({ navigation }) {
           updateMapStyle();
         }}
       >
-        {location && (
+        {selectedLocation && (
           <Marker
+            title="지정한 위치"
             coordinate={{
-              latitude: location.coords.latitude,
-              longitude: location.coords.longitude,
+              latitude: selectedLocation.lat,
+              longitude: selectedLocation.lng,
             }}
           ></Marker>
         )}
@@ -72,3 +90,10 @@ function Map({ navigation }) {
 }
 
 export default Map;
+
+const styles = StyleSheet.create({
+  mapStyle: {
+    height: Dimensions.get('window').height,
+    width: Dimensions.get('window').width,
+  },
+});
