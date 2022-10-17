@@ -7,6 +7,7 @@ import { Camera } from 'expo-camera';
 import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
 import * as Permissions from 'expo-permissions';
 import { useEffect, useState } from 'react';
+import OutlineBtn from '../UI/OutLineBtn';
 
 const ImagePicker = () => {
   const [pickedImage, setPickedImage] = useState(null);
@@ -30,7 +31,7 @@ const ImagePicker = () => {
     console.log(image);
     setPickedImage(image.uri);
   }
-  let imagePreview = <Text>이미지</Text>;
+  let imagePreview = <Text>미리보기</Text>;
 
   if (pickedImage) {
     imagePreview = <Image style={styles.img} source={{ uri: pickedImage }} />;
@@ -38,7 +39,9 @@ const ImagePicker = () => {
   return (
     <View>
       <View style={styles.imgView}>{imagePreview}</View>
-      <Button title="촬영" onPress={takeImageHandler} />
+      <OutlineBtn icon="camera" onPress={takeImageHandler}>
+        맛집 촬영
+      </OutlineBtn>
     </View>
   );
 };
@@ -51,6 +54,8 @@ const styles = StyleSheet.create({
     height: 200,
     width: '100%',
     marginVertical: 8,
+    overflow: 'hidden',
+    borderRadius: 4,
   },
   img: {
     width: '100%',

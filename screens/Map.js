@@ -29,7 +29,7 @@ function Map({ navigation }) {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== 'granted') {
-        setErrorMsg('Permission to access location was denied');
+        setErrorMsg('사용자의 위치 권한을 얻지 못했습니다.');
         return;
       }
 

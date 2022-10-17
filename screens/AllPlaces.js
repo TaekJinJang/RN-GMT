@@ -1,7 +1,7 @@
 import PlacesList from '../component/Places/PlacesList';
 
-const AllPlaces = ({ navigation }) => {
-  return <PlacesList navigation={navigation} />;
+const AllPlaces = () => {
+  return <PlacesList />;
 };
 
 export default AllPlaces;

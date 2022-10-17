@@ -3,8 +3,8 @@ import PlacesItem from './PlacesItem';
 import { useNavigation } from '@react-navigation/native';
 import AddPlace from '../../screens/AddPlace';
 
-const PlacesList = ({ places, navigation }) => {
-  //   const navigation = useNavigation();
+const PlacesList = ({ places }) => {
+  const navigation = useNavigation();
   if (!places || PlacesList.length === 0) {
     return (
       <View style={styles.fallbackContainer}>
@@ -14,7 +14,7 @@ const PlacesList = ({ places, navigation }) => {
         <Button
           style={styles.fallbackBtn}
           title="맛집 추가하러 가기"
-          onPress={() => navigation.navigate('AddPlace')}
+          onPress={() => navigation.navigate('Add')}
         ></Button>
       </View>
     );
