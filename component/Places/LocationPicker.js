@@ -2,11 +2,17 @@ import { Button, Image, StyleSheet, Text, View } from 'react-native';
 import OutlineBtn from '../UI/OutLineBtn';
 import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
-import getMapPreview from '../../util/location';
-import { useNavigation } from '@react-navigation/native';
+import getMapPreview, { getAddress } from '../../util/location';
+import {
+  useNavigation,
+  useRoute,
+  useIsFocused,
+} from '@react-navigation/native';
 
-const LocationPicker = () => {
+const LocationPicker = ({ onLocationData }) => {
+  const isFocused = useIsFocused();
   const navigation = useNavigation();
+  const route = useRoute();
   const [pickedLocation, setPickedLocation] = useState();
   console.log(pickedLocation);
 
@@ -43,6 +49,30 @@ const LocationPicker = () => {
       }
     })();
   }, []);
+  // 지도에서 찍은 마커 위치 받아오기
+  useEffect(() => {
+    if (isFocused && route.params) {
+      const mapPickedLocation = route.params && {
+        lat: route.params.pickedLat,
+        lng: route.params.pickedLng,
+      };
+      setPickedLocation(mapPickedLocation);
+    }
+  }, [route, isFocused]);
+
+  // 변경된 주소 데이터 받아오기
+  useEffect(() => {
+    const handleLocation = async () => {
+      if (pickedLocation) {
+        const address = await getAddress(
+          pickedLocation.lat,
+          pickedLocation.lng
+        );
+        onLocationData({ ...pickedLocation, address: address });
+      }
+    };
+    handleLocation();
+  }, [pickedLocation, onLocationData]);
   return (
     <View>
       <View style={styles.mapPreview}>{locationPreview}</View>

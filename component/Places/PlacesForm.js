@@ -1,25 +1,58 @@
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { ScrollView, Text, TextInput, View, StyleSheet } from 'react-native';
+import { Place } from '../../models/place';
+import Btn from '../UI/Btn';
 import ImagePicker from './ImagePicker';
 import LocationPicker from './LocationPicker';
 
-const PlacesForm = () => {
+const PlacesForm = ({ onCreatePlace }) => {
   const [enteredTitle, setEnteredTitle] = useState('');
+  const [enteredReview, setEnteredReview] = useState('');
+  const [imageData, setImageData] = useState('');
+  const [locationData, setLocationData] = useState('');
   const changeTitleHandler = (enteredTitle) => {
     setEnteredTitle(enteredTitle);
   };
+  const changeReviewHandler = (enteredReview) => {
+    setEnteredReview(enteredReview);
+  };
+  const imageDataHandler = (imageUri) => {
+    setImageData(imageUri);
+  };
+  const locationDataHandler = useCallback((location) => {
+    setLocationData(location);
+  }, []);
+
+  const savePlaceHandler = () => {
+    const placeData = new Place(
+      (title = enteredTitle),
+      (imageUri = imageData),
+      (location = locationData),
+      (type = 1),
+      (star = 1)
+    );
+    onCreatePlace(placeData);
+  };
+
   return (
     <ScrollView style={styles.form}>
       <View>
-        <Text style={styles.label}>Title</Text>
+        <Text style={styles.label}>이름</Text>
         <TextInput
           style={styles.input}
           onChangeText={changeTitleHandler}
           value={enteredTitle}
         />
       </View>
-      <ImagePicker />
-      <LocationPicker />
+      <ImagePicker onImageData={imageDataHandler} />
+      <LocationPicker onLocationData={locationDataHandler} />
+      <Text style={styles.Review}>후기</Text>
+      <TextInput
+        style={styles.input}
+        onChangeText={changeReviewHandler}
+        value={enteredReview}
+      />
+      <Btn onPress={savePlaceHandler}>맛집 추가하기</Btn>
     </ScrollView>
   );
 };
@@ -42,5 +75,10 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderBottomWidth: 2,
     borderBottomColor: 'blue',
+  },
+  Review: {
+    fontWeight: 'bold',
+    marginBottom: 4,
+    marginTop: 40,
   },
 });

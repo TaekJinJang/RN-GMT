@@ -23,7 +23,7 @@ const App = () => {
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Home">
         <Tab.Screen
-          name="Home"
+          name="AllPlaces"
           component={AllPlaces}
           options={{
             title: '홈',

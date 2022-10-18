@@ -9,7 +9,7 @@ import * as Permissions from 'expo-permissions';
 import { useEffect, useState } from 'react';
 import OutlineBtn from '../UI/OutLineBtn';
 
-const ImagePicker = () => {
+const ImagePicker = ({ onImageData }) => {
   const [pickedImage, setPickedImage] = useState(null);
   // 카메라 권한 받아오기
   useEffect(() => {
@@ -30,6 +30,7 @@ const ImagePicker = () => {
     });
     console.log(image);
     setPickedImage(image.uri);
+    onImageData(image.uri);
   }
   let imagePreview = <Text>미리보기</Text>;
 
