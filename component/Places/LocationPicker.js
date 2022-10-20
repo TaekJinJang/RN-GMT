@@ -14,7 +14,7 @@ const LocationPicker = ({ onLocationData }) => {
   const navigation = useNavigation();
   const route = useRoute();
   const [pickedLocation, setPickedLocation] = useState();
-  console.log(pickedLocation);
+  // console.log(pickedLocation);
 
   const getLocationHandler = async () => {
     let location = await Location.getCurrentPositionAsync({});

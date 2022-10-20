@@ -7,6 +7,7 @@ import Styled from 'styled-components/native';
 import Map from './screens/Map';
 import AllPlaces from './screens/AllPlaces';
 import AddPlace from './screens/AddPlace';
+import PlaceDetails from './screens/PlacesDetails';
 
 const Tab = createBottomTabNavigator();
 
@@ -61,6 +62,13 @@ const App = () => {
             tabBarIcon: ({ color, size }) => (
               <Icon name="message" color={color} size={size} />
             ),
+          }}
+        />
+        <Tab.Screen
+          name="PlaceDetails"
+          component={PlaceDetails}
+          options={{
+            tabBarStyle: { display: 'none' },
           }}
         />
       </Tab.Navigator>

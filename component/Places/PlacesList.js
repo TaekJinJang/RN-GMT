@@ -5,7 +5,14 @@ import AddPlace from '../../screens/AddPlace';
 
 const PlacesList = ({ places }) => {
   const navigation = useNavigation();
-  if (!places || PlacesList.length === 0) {
+
+  const selectPlaceHandler = (id) => {
+    navigation.navigate('PlaceDetails', {
+      placeId: id,
+    });
+  };
+
+  if (!places || places.length === 0) {
     return (
       <View style={styles.fallbackContainer}>
         <Text style={styles.fallbackText}>
@@ -21,9 +28,12 @@ const PlacesList = ({ places }) => {
   }
   return (
     <FlatList // 많은 장소를 스크롤로 내릴 수 있게 해줌
+      style={styles.list}
       data={places}
       keyExtractor={(item) => item.id}
-      renderItem={({ item }) => <PlacesItem place={item} />}
+      renderItem={({ item }) => (
+        <PlacesItem place={item} onSelect={selectPlaceHandler} />
+      )}
     />
   );
   // models/place 의 형태를 가짐
@@ -32,6 +42,9 @@ const PlacesList = ({ places }) => {
 export default PlacesList;
 
 const styles = StyleSheet.create({
+  list: {
+    margin: 24,
+  },
   fallbackContainer: {
     flex: 1,
     justifyContent: 'center',

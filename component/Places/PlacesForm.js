@@ -28,6 +28,7 @@ const PlacesForm = ({ onCreatePlace }) => {
       (title = enteredTitle),
       (imageUri = imageData),
       (location = locationData),
+      (review = enteredReview),
       (type = 1),
       (star = 1)
     );
@@ -52,7 +53,9 @@ const PlacesForm = ({ onCreatePlace }) => {
         onChangeText={changeReviewHandler}
         value={enteredReview}
       />
-      <Btn onPress={savePlaceHandler}>맛집 추가하기</Btn>
+      <View style={styles.btn}>
+        <Btn onPress={savePlaceHandler}>맛집 추가하기</Btn>
+      </View>
     </ScrollView>
   );
 };
@@ -80,5 +83,8 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     marginBottom: 4,
     marginTop: 40,
+  },
+  btn: {
+    marginBottom: 50,
   },
 });
