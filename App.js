@@ -55,20 +55,13 @@ const App = () => {
           }}
         />
         <Tab.Screen
-          name="Message"
-          component={MessageScreen}
-          options={{
-            title: '메시지',
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="message" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
           name="PlaceDetails"
           component={PlaceDetails}
           options={{
-            tabBarStyle: { display: 'none' },
+            title: '맛집 모음',
+            tabBarIcon: ({ color, size }) => (
+              <Icon name="book" color={color} size={size} />
+            ),
           }}
         />
       </Tab.Navigator>

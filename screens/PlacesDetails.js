@@ -3,21 +3,23 @@ import { Image, ScrollView, StyleSheet, Text, View } from 'react-native';
 import OutlineBtn from '../component/UI/OutLineBtn';
 
 const PlaceDetails = ({ route }) => {
-  useEffect(() => {}, [selectedPlaceId]);
-  const selectedPlaceId = route.params.placeId;
+  useEffect(() => {}, []);
+  //   const selectedPlaceId = route.params.placeId;
   const showOnMapHandler = () => {};
+
   return (
-    <ScrollView>
-      <Image style={styles.image} />
-      <View style={styles.locationContainer}>
-        <View style={styles.addressContainer}>
-          <Text style={styles.address}>주소</Text>
-        </View>
-        <OutlineBtn icon="map" onPress={showOnMapHandler}>
-          지도 보기
-        </OutlineBtn>
-      </View>
-    </ScrollView>
+    <Text>구현중입니다</Text>
+    // <ScrollView>
+    //   <Image style={styles.image} />
+    //   <View style={styles.locationContainer}>
+    //     <View style={styles.addressContainer}>
+    //       <Text style={styles.address}>주소</Text>
+    //     </View>
+    //     <OutlineBtn icon="map" onPress={showOnMapHandler}>
+    //       지도 보기
+    //     </OutlineBtn>
+    //   </View>
+    // </ScrollView>
   );
 };
 
