@@ -6,7 +6,6 @@ import { fetchPlaces } from '../util/database';
 const AllPlaces = ({ route }) => {
   const [loadedPlaces, setLoadedPlaces] = useState(null);
   const isFocused = useIsFocused();
-  console.log('패치', fetchPlaces());
 
   useEffect(() => {
     const loadPlaces = async () => {

@@ -69,6 +69,7 @@ export function fetchPlaces() {
       );
     });
   });
+  return promise;
 }
 
 export function insertPlace(place) {
@@ -97,4 +98,5 @@ export function insertPlace(place) {
       );
     });
   });
+  return promise;
 }
