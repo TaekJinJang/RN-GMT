@@ -28,8 +28,9 @@ const PlacesForm = ({ onCreatePlace }) => {
       (title = enteredTitle),
       (imageUri = imageData),
       (location = locationData),
+      // (address = locationData.address),
       (review = enteredReview),
-      (type = 1),
+      (type = '한식'),
       (star = 1)
     );
     onCreatePlace(placeData);

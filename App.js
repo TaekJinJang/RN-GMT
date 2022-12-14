@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
+import * as SplashScreen from 'expo-splash-screen';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import { Text, View, StyleSheet, Dimensions } from 'react-native';
@@ -8,6 +9,9 @@ import Map from './screens/Map';
 import AllPlaces from './screens/AllPlaces';
 import AddPlace from './screens/AddPlace';
 import PlaceDetails from './screens/PlacesDetails';
+import { init } from './util/database';
+
+// SplashScreen.preventAutoHideAsync();
 
 const Tab = createBottomTabNavigator();
 
@@ -20,6 +24,29 @@ function MessageScreen() {
 }
 
 const App = () => {
+  const [dbInitialized, setDbInitialized] = useState(false);
+  useEffect(() => {
+    init()
+      .then(() => {
+        // DB연결 성공시
+        setDbInitialized(true);
+        console.log('성공');
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // const onLayoutRootView = useCallback(async () => {
+  //   if (dbInitialized) {
+  //     await SplashScreen.hideAsync();
+  //   }
+  // }, [dbInitialized]);
+
+  // if (!dbInitialized) {
+  //   return <View onLayout={onLayoutRootView}></View>;
+  // }
+
   return (
     <NavigationContainer>
       <Tab.Navigator initialRouteName="Home">

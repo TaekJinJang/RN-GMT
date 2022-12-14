@@ -27,14 +27,16 @@ const PlacesList = ({ places }) => {
     );
   }
   return (
-    <FlatList // 많은 장소를 스크롤로 내릴 수 있게 해줌
-      style={styles.list}
-      data={places}
-      keyExtractor={(item) => item.id}
-      renderItem={({ item }) => (
-        <PlacesItem place={item} onSelect={selectPlaceHandler} />
-      )}
-    />
+    <>
+      <FlatList // 많은 장소를 스크롤로 내릴 수 있게 해줌
+        style={styles.list}
+        data={places}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <PlacesItem place={item} onSelect={selectPlaceHandler} />
+        )}
+      />
+    </>
   );
   // models/place 의 형태를 가짐
 };
