@@ -2,21 +2,23 @@ import {
   launchCameraAsync,
   PermissionStatus,
   useCameraPermissions,
-} from 'expo-image-picker';
-import { Camera } from 'expo-camera';
-import { Alert, Button, Image, StyleSheet, Text, View } from 'react-native';
-import * as Permissions from 'expo-permissions';
-import { useEffect, useState } from 'react';
-import OutlineBtn from '../UI/OutLineBtn';
+} from "expo-image-picker";
+import { Camera } from "expo-camera";
+import { Alert, Button, Image, StyleSheet, Text, View } from "react-native";
+import * as Permissions from "expo-permissions";
+import { useEffect, useState } from "react";
+import OutlineBtn from "../UI/OutLineBtn";
 
 const ImagePicker = ({ onImageData }) => {
   const [pickedImage, setPickedImage] = useState(null);
   // 카메라 권한 받아오기
   useEffect(() => {
     async () => {
-      let { cameraStatus } = await Camera.requestCameraPermissionsAsync();
-      if (cameraStatus !== 'granted') {
-        Alert.alert('이 앱을 사용하려면 카메라 사용 권한이 필요합니다.');
+      await Camera.requestCameraPermissionsAsync();
+      let cameraStatus = await Camera.requestCameraPermissionsAsync();
+      console.log("카메라권한", cameraStatus);
+      if (cameraStatus !== "granted") {
+        Alert.alert("이 앱을 사용하려면 카메라 사용 권한이 필요합니다.");
         return false;
       }
     };
@@ -49,18 +51,18 @@ const ImagePicker = ({ onImageData }) => {
 
 const styles = StyleSheet.create({
   imgView: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     fontSize: 20,
     height: 200,
-    width: '100%',
+    width: "100%",
     marginVertical: 8,
-    overflow: 'hidden',
+    overflow: "hidden",
     borderRadius: 4,
   },
   img: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
 });
 
