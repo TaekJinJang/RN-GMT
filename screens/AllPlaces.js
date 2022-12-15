@@ -11,7 +11,7 @@ const AllPlaces = ({ route }) => {
     const loadPlaces = async () => {
       const places = await fetchPlaces();
       setLoadedPlaces(places);
-      console.log('올플레이스', loadedPlaces);
+      // console.log('올플레이스', loadedPlaces);
     };
     if (isFocused) {
       //  && route.params  DB를 사용하면서 라우터가 쓸모없어졌으니 모든 컴포넌트에서 지워줌

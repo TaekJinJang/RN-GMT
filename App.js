@@ -10,10 +10,12 @@ import AllPlaces from './screens/AllPlaces';
 import AddPlace from './screens/AddPlace';
 import PlaceDetails from './screens/PlacesDetails';
 import { init } from './util/database';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 // SplashScreen.preventAutoHideAsync();
 
 const Tab = createBottomTabNavigator();
+const Stack = createNativeStackNavigator();
 
 function NotificationScreen() {
   return <Text>Notification</Text>;
@@ -22,6 +24,78 @@ function NotificationScreen() {
 function MessageScreen() {
   return <Text>Message</Text>;
 }
+
+const TabNavi = ({ navigation }) => {
+  return (
+    <Tab.Navigator initialRouteName="Home">
+      <Tab.Screen
+        name="AllPlaces"
+        component={AllPlaces}
+        options={{
+          title: '홈',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="home" color={color} size={size} />
+          ),
+          unmountOnBlur: true,
+        }}
+        // listeners={() => ({
+        //   tabPress: (e) => {
+        //     e.preventDefault();
+        //     navigation.navigate('NewScreen');
+        //   },
+        // })}
+      />
+      <Tab.Screen
+        name="Map"
+        component={Map}
+        options={{
+          title: '지도',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="map" color={color} size={size} />
+          ),
+        }}
+        // listeners={() => {
+        //   navigation.navigate('Map', {
+        //     initialLat: null,
+        //     initialLng: null,
+        //   });
+        // }}
+      />
+      <Tab.Screen
+        name="Add"
+        component={AddPlace}
+        options={{
+          title: '맛집 추가',
+          tabBarIcon: ({ color, size }) => (
+            <Icon name="add" color={color} size={size} />
+          ),
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
+const StackNavi = () => {
+  return (
+    <Stack.Navigator initialRouteName="TabNavi">
+      <Stack.Screen
+        name="TabNavi"
+        component={TabNavi}
+        options={{
+          headerShown: false,
+          animationEnabled: false,
+        }}
+      />
+      <Stack.Screen
+        name="PlaceDetails"
+        component={PlaceDetails}
+        options={{
+          animationEnabled: false,
+          title: '정보를 가져오는중...',
+        }}
+      />
+    </Stack.Navigator>
+  );
+};
 
 const App = () => {
   const [dbInitialized, setDbInitialized] = useState(false);
@@ -48,51 +122,11 @@ const App = () => {
   // }
 
   return (
-    <NavigationContainer>
-      <Tab.Navigator initialRouteName="Home">
-        <Tab.Screen
-          name="AllPlaces"
-          component={AllPlaces}
-          options={{
-            title: '홈',
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="home" color={color} size={size} />
-            ),
-            unmountOnBlur: true,
-          }}
-        />
-        <Tab.Screen
-          name="Map"
-          component={Map}
-          options={{
-            title: '지도',
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="map" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="Add"
-          component={AddPlace}
-          options={{
-            title: '맛집 추가',
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="add" color={color} size={size} />
-            ),
-          }}
-        />
-        <Tab.Screen
-          name="PlaceDetails"
-          component={PlaceDetails}
-          options={{
-            title: '맛집 모음',
-            tabBarIcon: ({ color, size }) => (
-              <Icon name="book" color={color} size={size} />
-            ),
-          }}
-        />
-      </Tab.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <StackNavi />
+      </NavigationContainer>
+    </>
   );
 };
 

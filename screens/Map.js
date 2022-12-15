@@ -1,15 +1,31 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, {
+  useState,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from 'react';
 import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
 import IconBtn from '../component/UI/IconBtn';
+import { useIsFocused } from '@react-navigation/native';
 
-function Map({ navigation }) {
+function Map({ navigation, route }) {
+  console.log(route.params);
+
+  let initialLocation = route.params && {
+    // 상세페이지에서 데이터를 받아왔다면 lat,lng값에 데이터를 넣어주기
+    lat: route.params.initialLat,
+    lng: route.params.initialLng,
+  };
+  let [touch, setTouch] = useState(true);
+  console.log('터치', touch);
   const [mapWidth, setMapWidth] = useState('99%');
-  const [selectedLocation, setSelectedLocation] = useState(null);
+  const [selectedLocation, setSelectedLocation] = useState();
+
   const [initialRegion, setInitialRegion] = useState({
-    latitude: 35.91395373474155,
-    longitude: 127.73829440215488,
+    latitude: initialLocation ? initialLocation.lat : 35.91395373474155,
+    longitude: initialLocation ? initialLocation.lng : 127.73829440215488,
     latitudeDelta: 5,
     longitudeDelta: 5,
   });
@@ -17,6 +33,20 @@ function Map({ navigation }) {
   const updateMapStyle = () => {
     setMapWidth('100%');
   };
+  const isFocused = useIsFocused();
+
+  useEffect(() => {
+    // 지도를 열때마다 실행
+    if (isFocused) {
+      updateMapStyle();
+      setSelectedLocation(initialLocation);
+      console.log('그냥이펙트');
+      // route.params = null;
+      if (route.params) {
+        route.params = null;
+      }
+    }
+  }, [isFocused]);
 
   // 현재 위치 받아오기
   useEffect(() => {
@@ -27,24 +57,35 @@ function Map({ navigation }) {
         return;
       }
     })();
+    // if (route.params) {
+    //   setInitialLocation(route.params);
+    // }
   }, []);
 
-  // 마커 위치를 Addplace 페이지로 넘겨주기
+  // 저장 아이콘 띄우기
   useEffect(() => {
+    console.log('레이아웃', initialLocation);
+    if (initialLocation) {
+      setTouch(true);
+      // 데이터가 있을땐 읽기전용 지도로 만들기위해 return으로 아래 코드를 인식하지 못하게함
+      return navigation.setOptions({
+        headerRight: '',
+      });
+    }
+    setTouch(false);
     navigation.setOptions({
-      headerRight: ({ tintColor }) => (
-        <IconBtn
-          icon="save"
-          size={24}
-          color={tintColor}
-          onPress={savePickedLocationHandler}
-        />
+      headerRight: () => (
+        <IconBtn icon="save" size={24} onPress={savePickedLocationHandler} />
       ),
     });
-  }, [selectedLocation]);
+  }, [isFocused]);
 
   // 터치로 위치 경도 받아오기
   const selectLocationHandler = (event) => {
+    if (touch) {
+      // 데이터가 있을땐 읽기전용 지도로 만들기위해 return으로 아래 코드를 인식하지 못하게함
+      return;
+    }
     const lat = event.nativeEvent.coordinate.latitude;
     const lng = event.nativeEvent.coordinate.longitude;
     setSelectedLocation({ lat: lat, lng: lng });
@@ -72,7 +113,7 @@ function Map({ navigation }) {
         followsUserLocation={true}
         showsMyLocationButton={true}
         onMapReady={() => {
-          updateMapStyle();
+          mapWidth;
         }}
       >
         {selectedLocation && (

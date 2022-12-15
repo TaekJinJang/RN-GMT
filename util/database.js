@@ -52,9 +52,9 @@ export function fetchPlaces() {
                   lat: dp.lat,
                   lng: dp.lng,
                 },
+                dp.review,
                 dp.type,
                 dp.star,
-                dp.review,
                 dp.id
               )
             );
@@ -98,5 +98,25 @@ export function insertPlace(place) {
       );
     });
   });
+  return promise;
+}
+
+export function fetchPlaceDetails(id) {
+  const promise = new Promise((resolve, reject) => {
+    database.transaction((tx) => {
+      tx.executeSql(
+        'SELECT * FROM places WHERE id = ?',
+        [id],
+        (_, result) => {
+          resolve(result.rows._array[0]);
+        },
+        (_, error) => {
+          reject(error);
+          console.log(error);
+        }
+      );
+    });
+  });
+
   return promise;
 }
