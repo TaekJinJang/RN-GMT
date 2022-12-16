@@ -12,7 +12,9 @@ const PlacesItem = ({ place, onSelect }) => {
           <Text style={styles.title}>{place.title}</Text>
           <Text style={styles.type}>{place.type}</Text>
         </View>
-        <Text style={styles.address}>{place.address}</Text>
+        <Text style={styles.address} numberOfLines={1} ellipsizeMode="tail">
+          {place.address}
+        </Text>
         <Text style={styles.star}>{place.star}</Text>
         <Text numberOfLines={1} ellipsizeMode="tail">
           후기 : {place.review}
@@ -44,7 +46,7 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomLeftRadius: 4,
     borderTopLeftRadius: 4,
-    height: 115,
+    height: 110,
   },
   info: {
     flex: 2,

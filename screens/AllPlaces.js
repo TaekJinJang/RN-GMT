@@ -19,6 +19,7 @@ const AllPlaces = ({ route }) => {
       // setLoadedPlaces((curPlaces) => [...curPlaces, route.params.place]);
     }
   }, [isFocused]);
+  console.log(loadedPlaces);
 
   return <PlacesList places={loadedPlaces} />;
 };
