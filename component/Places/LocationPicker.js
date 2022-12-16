@@ -1,24 +1,24 @@
-import { Button, Image, StyleSheet, Text, View } from 'react-native';
-import OutlineBtn from '../UI/OutLineBtn';
-import * as Location from 'expo-location';
-import { useEffect, useState } from 'react';
-import getMapPreview, { getAddress } from '../../util/location';
+import { Button, Image, StyleSheet, Text, View } from "react-native";
+import OutlineBtn from "../UI/OutLineBtn";
+import * as Location from "expo-location";
+import { useEffect, useState } from "react";
+import getMapPreview, { getAddress } from "../../util/location";
 import {
   useNavigation,
   useRoute,
   useIsFocused,
-} from '@react-navigation/native';
+} from "@react-navigation/native";
+import Btn from "../UI/Btn";
 
 const LocationPicker = ({ onLocationData }) => {
   const isFocused = useIsFocused();
   const navigation = useNavigation();
   const route = useRoute();
   const [pickedLocation, setPickedLocation] = useState();
-  // console.log(pickedLocation);
 
   const getLocationHandler = async () => {
     let location = await Location.getCurrentPositionAsync({});
-    console.log(location);
+
     setPickedLocation({
       lat: location.coords.latitude,
       lng: location.coords.longitude,
@@ -26,7 +26,7 @@ const LocationPicker = ({ onLocationData }) => {
   };
 
   const pickOnMapHandler = () => {
-    navigation.navigate('Map');
+    navigation.navigate("Map");
   };
 
   let locationPreview = <Text>선택한 위치 없음</Text>;
@@ -43,8 +43,8 @@ const LocationPicker = ({ onLocationData }) => {
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        setErrorMsg('사용자의 위치 권한을 얻지 못했습니다.');
+      if (status !== "granted") {
+        setErrorMsg("사용자의 위치 권한을 얻지 못했습니다.");
         return;
       }
     })();
@@ -77,12 +77,14 @@ const LocationPicker = ({ onLocationData }) => {
     <View>
       <View style={styles.mapPreview}>{locationPreview}</View>
       <View style={styles.actions}>
-        <OutlineBtn icon="location" onPress={getLocationHandler}>
-          내 위치 찾기
-        </OutlineBtn>
-        <OutlineBtn icon="map" onPress={pickOnMapHandler}>
-          지도 찾기
-        </OutlineBtn>
+        <Btn icon="location" onPress={getLocationHandler}>
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;내 위치 찾기 &nbsp; &nbsp; &nbsp;
+          &nbsp;
+        </Btn>
+        <Btn icon="map" onPress={pickOnMapHandler}>
+          &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;지도 찾기 &nbsp; &nbsp; &nbsp;
+          &nbsp;
+        </Btn>
       </View>
     </View>
   );
@@ -92,22 +94,22 @@ export default LocationPicker;
 
 const styles = StyleSheet.create({
   mapPreview: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     fontSize: 20,
     height: 200,
-    width: '100%',
+    width: "100%",
     marginVertical: 8,
     borderRadius: 4,
-    overflow: 'hidden',
+    overflow: "hidden",
   },
   actions: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
+    flexDirection: "row",
+    justifyContent: "space-around",
+    alignItems: "center",
   },
   image: {
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
   },
 });

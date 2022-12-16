@@ -1,7 +1,7 @@
-import * as SQLite from 'expo-sqlite';
-import { Place } from '../models/place';
+import * as SQLite from "expo-sqlite";
+import { Place } from "../models/place";
 
-const database = SQLite.openDatabase('places.db');
+const database = SQLite.openDatabase("places.db");
 
 export const init = () => {
   const promise = new Promise((resolve, reject) => {
@@ -41,7 +41,6 @@ export function fetchPlaces() {
         [],
         (_, result) => {
           const places = [];
-          //   console.log('페치플레이스', result);
           for (const dp of result.rows._array) {
             places.push(
               new Place(
@@ -60,7 +59,6 @@ export function fetchPlaces() {
             );
           }
           resolve(places);
-          //   console.log('마지막배열', places);
         },
         (_, error) => {
           reject(error);
@@ -89,7 +87,6 @@ export function insertPlace(place) {
           place.review,
         ],
         (_, result) => {
-          console.log('데이터삽입', result);
           resolve(result);
         }, //
         (_, error) => {
@@ -105,7 +102,7 @@ export function fetchPlaceDetails(id) {
   const promise = new Promise((resolve, reject) => {
     database.transaction((tx) => {
       tx.executeSql(
-        'SELECT * FROM places WHERE id = ?',
+        "SELECT * FROM places WHERE id = ?",
         [id],
         (_, result) => {
           resolve(result.rows._array[0]);

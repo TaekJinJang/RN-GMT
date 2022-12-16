@@ -1,12 +1,16 @@
-import { Pressable, StyleSheet, Text } from 'react-native';
+import { Ionicons } from "@expo/vector-icons";
+import { Pressable, StyleSheet, Text, View } from "react-native";
 
-const Btn = ({ onPress, children }) => {
+const Btn = ({ onPress, icon, children }) => {
   return (
     <Pressable
       style={({ pressed }) => [styles.btn, pressed && styles.pressed]}
       onPress={onPress}
     >
-      <Text style={styles.text}>{children}</Text>
+      <View style={styles.view}>
+        {icon && <Ionicons style={styles.icon} name={icon} size={18} />}
+        <Text style={styles.text}>{children}</Text>
+      </View>
     </Pressable>
   );
 };
@@ -18,20 +22,28 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 8,
     margin: 4,
-    backgroundColor: 'blue',
+    backgroundColor: "cornflowerblue",
     elevation: 2,
-    shadowColor: 'black',
-    shadowOpacity: 0.15,
+    shadowColor: "black",
+    shadowOpacity: 0.3,
     shadowOffset: { width: 1, height: 1 },
     shadowRadius: 2,
-    borderRadius: 4,
+    borderRadius: 30,
   },
   pressed: {
     opacity: 0.7,
   },
-  text: {
-    textAlign: 'center',
-    fontSize: 16,
-    color: 'white',
+  locationContainer: {
+    // justifyContent: 'center',
+    // alignItems: 'center',
   },
+  icon: { marginRight: 6, color: "white", textAlign: "center" },
+  text: {
+    textAlign: "center",
+    fontSize: 16,
+    color: "white",
+    flex: 1,
+    flexDirection: "row",
+  },
+  view: {},
 });

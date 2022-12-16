@@ -1,5 +1,5 @@
-import { Pressable, StyleSheet } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import { Pressable, StyleSheet } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 
 const IconBtn = ({ icon, size, color, onPress }) => {
   return (
@@ -18,8 +18,8 @@ const styles = StyleSheet.create({
   btn: {
     padding: 8,
     margin: 4,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   preesed: {
     opacity: 0.7,

@@ -3,27 +3,23 @@ import React, {
   useEffect,
   useCallback,
   useLayoutEffect,
-} from 'react';
-import MapView, { PROVIDER_GOOGLE, Marker } from 'react-native-maps';
-import * as Location from 'expo-location';
-import { Text, View, StyleSheet, Dimensions, Alert } from 'react-native';
-import IconBtn from '../component/UI/IconBtn';
-import { useIsFocused } from '@react-navigation/native';
+} from "react";
+import MapView, { PROVIDER_GOOGLE, Marker } from "react-native-maps";
+import * as Location from "expo-location";
+import { Text, View, StyleSheet, Dimensions, Alert } from "react-native";
+import IconBtn from "../component/UI/IconBtn";
+import { useIsFocused } from "@react-navigation/native";
 
 function Map({ navigation, route }) {
-  console.log(route.params);
-
   let initialLocation = route.params && {
     // 상세페이지에서 데이터를 받아왔다면 lat,lng값에 데이터를 넣어주기
     lat: route.params.initialLat,
     lng: route.params.initialLng,
   };
   let [touch, setTouch] = useState(true);
-  console.log('터치', touch);
-  const [mapWidth, setMapWidth] = useState('99%');
-  let [selectedLocation, setSelectedLocation] = useState();
 
-  console.log(selectedLocation, '터치');
+  const [mapWidth, setMapWidth] = useState("99%");
+  let [selectedLocation, setSelectedLocation] = useState();
 
   const [initialRegion, setInitialRegion] = useState({
     latitude: initialLocation ? initialLocation.lat : 35.91395373474155,
@@ -33,7 +29,7 @@ function Map({ navigation, route }) {
   });
   // 안드로이드 showsMyLocationButton 오류떠서 리랜더링 할 수 있도록 만듦
   const updateMapStyle = () => {
-    setMapWidth('100%');
+    setMapWidth("100%");
   };
   const isFocused = useIsFocused();
 
@@ -45,14 +41,13 @@ function Map({ navigation, route }) {
         route.params = null;
       }
       setSelectedLocation();
-      console.log('이즈포커스', selectedLocation);
     }
     if (initialLocation) {
       setTouch(true);
       setSelectedLocation(initialLocation);
       // 데이터가 있을땐 읽기전용 지도로 만들기위해 return으로 아래 코드를 인식하지 못하게함
       return navigation.setOptions({
-        headerRight: '',
+        headerRight: "",
       });
     }
     setTouch(false);
@@ -62,8 +57,8 @@ function Map({ navigation, route }) {
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== 'granted') {
-        Alert('사용자의 위치 권한을 얻지 못했습니다.');
+      if (status !== "granted") {
+        Alert("사용자의 위치 권한을 얻지 못했습니다.");
         return;
       }
     })();
@@ -71,8 +66,6 @@ function Map({ navigation, route }) {
 
   // 저장 아이콘 띄우기
   useEffect(() => {
-    console.log('레이아웃', initialLocation);
-
     navigation.setOptions({
       headerRight: () => (
         <IconBtn icon="save" size={24} onPress={savePickedLocationHandler} />
@@ -80,20 +73,19 @@ function Map({ navigation, route }) {
     });
     if (touch) {
       navigation.setOptions({
-        headerRight: '',
+        headerRight: "",
       });
     }
   }, [selectedLocation]);
 
   // 받은 위치를 Add 컴포넌트로 넘겨주기
   const savePickedLocationHandler = useCallback(() => {
-    console.log('add콤포넌트');
     if (!selectedLocation) {
-      Alert.alert('선택된 위치 없음!', '지도를 터치하여 위치를 선택해주세요');
+      Alert.alert("선택된 위치 없음!", "지도를 터치하여 위치를 선택해주세요");
       5;
       return;
     }
-    navigation.navigate('Add', {
+    navigation.navigate("Add", {
       pickedLat: selectedLocation.lat,
       pickedLng: selectedLocation.lng,
     });
@@ -108,7 +100,6 @@ function Map({ navigation, route }) {
     const lat = event.nativeEvent.coordinate.latitude;
     const lng = event.nativeEvent.coordinate.longitude;
     setSelectedLocation({ lat: lat, lng: lng });
-    console.log('위치', selectedLocation);
   };
 
   return (
@@ -143,7 +134,7 @@ export default Map;
 
 const styles = StyleSheet.create({
   mapStyle: {
-    height: Dimensions.get('window').height,
-    width: Dimensions.get('window').width,
+    height: Dimensions.get("window").height,
+    width: Dimensions.get("window").width,
   },
 });

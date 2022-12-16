@@ -1,25 +1,25 @@
-import { FlatList, Text, View, StyleSheet, Button } from 'react-native';
-import PlacesItem from './PlacesItem';
-import { useNavigation } from '@react-navigation/native';
-import AddPlace from '../../screens/AddPlace';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { useEffect, useState } from 'react';
+import { FlatList, Text, View, StyleSheet, Button } from "react-native";
+import PlacesItem from "./PlacesItem";
+import { useIsFocused, useNavigation } from "@react-navigation/native";
+import AddPlace from "../../screens/AddPlace";
+import DropDownPicker from "react-native-dropdown-picker";
+import { useEffect, useState } from "react";
 
 const PlacesList = ({ places }) => {
   const navigation = useNavigation();
 
   const selectPlaceHandler = (id) => {
-    navigation.navigate('PlaceDetails', {
+    navigation.navigate("PlaceDetails", {
       placeId: id,
     });
   };
   const [open, setOpen] = useState(false);
-  const [enteredType, setEnteredType] = useState('전체보기');
-  const [filterType, setFilterType] = useState();
+  const [enteredType, setEnteredType] = useState("전체보기");
+  let [filterType, setFilterType] = useState(places);
 
   //  filter함수 쓸 곳
   const filterPlaces = (Type) => {
-    if (Type === '전체보기') {
+    if (Type == "전체보기") {
       return setFilterType(places);
     } else {
       setFilterType(
@@ -32,31 +32,30 @@ const PlacesList = ({ places }) => {
 
   useEffect(() => {
     filterPlaces(enteredType);
-  }, [filterType]);
+  }, [enteredType]);
 
   const [items, setItems] = useState([
-    { label: '한식', value: '한식' },
-    { label: '중식', value: '중식' },
-    { label: '일식', value: '일식' },
-    { label: '양식', value: '양식' },
+    { label: "전체보기", value: "전체보기" },
+    { label: "한식", value: "한식" },
+    { label: "중식", value: "중식" },
+    { label: "일식", value: "일식" },
+    { label: "양식", value: "양식" },
   ]);
-  console.log(places);
+
   if (!places || places.length === 0) {
     return (
       <View style={styles.fallbackContainer}>
         <Text style={styles.fallbackText}>
-          아직 장소가 추가되지 않았습니다.{'\n'} 나만의 맛집을 추가해보세요 !
+          아직 장소가 추가되지 않았습니다.{"\n"} 나만의 맛집을 추가해보세요 !
         </Text>
         <Button
           style={styles.fallbackBtn}
           title="맛집 추가하러 가기"
-          onPress={() => navigation.navigate('Add')}
+          onPress={() => navigation.navigate("Add")}
         ></Button>
       </View>
     );
   }
-
-  console.log(enteredType);
 
   return (
     <View style={styles.list}>
@@ -69,13 +68,13 @@ const PlacesList = ({ places }) => {
         setItems={setItems}
         placeholder="음식종류"
         modalProps={{
-          animationType: 'fade',
+          animationType: "fade",
         }}
         listMode="SCROLLVIEW"
         modalTitle="선택해주세요."
       />
       <FlatList // 많은 장소를 스크롤로 내릴 수 있게 해줌
-        data={filterType}
+        data={filterType ? filterType : places}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <PlacesItem place={item} onSelect={selectPlaceHandler} />
@@ -94,15 +93,15 @@ const styles = StyleSheet.create({
   },
   fallbackContainer: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   fallbackText: {
     fontSize: 16,
   },
   fallbackBtn: {
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     marginTop: 20,
     fontSize: 30,
   },

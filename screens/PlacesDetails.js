@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState } from "react";
 import {
   Alert,
   Button,
@@ -7,15 +7,15 @@ import {
   StyleSheet,
   Text,
   View,
-} from 'react-native';
-import OutlineBtn from '../component/UI/OutLineBtn';
-import { deletePlace, fetchPlaceDetails } from '../util/database';
+} from "react-native";
+import OutlineBtn from "../component/UI/OutLineBtn";
+import { deletePlace, fetchPlaceDetails } from "../util/database";
 
 const PlaceDetails = ({ route, navigation }) => {
   const [fetchedPlace, setFetchedPlace] = useState();
   const selectedPlaceId = route.params.placeId;
   const showOnMapHandler = () => {
-    navigation.navigate('Map', {
+    navigation.navigate("Map", {
       initialLat: fetchedPlace.lat,
       initialLng: fetchedPlace.lng,
     });
@@ -25,8 +25,8 @@ const PlaceDetails = ({ route, navigation }) => {
       const place = await fetchPlaceDetails(selectedPlaceId);
       setFetchedPlace(place);
       navigation.setOptions({
-        title: '자세히보기',
-        headerTitleAlign: 'center',
+        title: "자세히보기",
+        headerTitleAlign: "center",
       });
     };
 
@@ -40,7 +40,7 @@ const PlaceDetails = ({ route, navigation }) => {
       </View>
     );
   }
-  console.log(fetchedPlace);
+
   return (
     <ScrollView>
       <Image style={styles.image} source={{ uri: fetchedPlace.imageUri }} />
@@ -61,7 +61,7 @@ const PlaceDetails = ({ route, navigation }) => {
           color="red"
           onPress={async () => {
             await deletePlace(selectedPlaceId);
-            Alert.alert('맛집 정보가 삭제되었습니다.');
+            Alert.alert("맛집 정보가 삭제되었습니다.");
             navigation.pop();
           }}
         />
@@ -75,33 +75,33 @@ export default PlaceDetails;
 const styles = StyleSheet.create({
   btn: {
     marginTop: 50,
-    alignItems: 'flex-end',
+    alignItems: "flex-end",
     paddingHorizontal: 12,
     paddingVertical: 6,
     margin: 4,
-    justifyContent: 'center',
-    alignItems: 'flex-end',
+    justifyContent: "center",
+    alignItems: "flex-end",
   },
-  review: { padding: 10, fontWeight: 'bold', fontSize: 18 },
-  star: { padding: 10, fontWeight: 'bold', fontSize: 15, color: 'red' },
+  review: { padding: 10, fontWeight: "bold", fontSize: 18 },
+  star: { padding: 10, fontWeight: "bold", fontSize: 15, color: "red" },
   fallback: {
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
   },
   title: {
     padding: 10,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 20,
   },
   image: {
-    height: '35%',
+    height: "35%",
     minHeight: 300,
-    width: '100%',
+    width: "100%",
   },
   locationContainer: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     // justifyContent: 'center',
     // alignItems: 'center',
   },
@@ -109,9 +109,9 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   address: {
-    color: 'gray',
+    color: "gray",
     // textAlign: 'center',
-    fontWeight: 'bold',
+    fontWeight: "bold",
     fontSize: 16,
   },
 });

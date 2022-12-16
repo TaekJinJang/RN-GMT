@@ -1,34 +1,34 @@
-import { useCallback, useState } from 'react';
-import { ScrollView, Text, TextInput, View, StyleSheet } from 'react-native';
-import DropDownPicker from 'react-native-dropdown-picker';
-import { Place } from '../../models/place';
-import Btn from '../UI/Btn';
-import ImagePicker from './ImagePicker';
-import LocationPicker from './LocationPicker';
+import { useCallback, useState } from "react";
+import { ScrollView, Text, TextInput, View, StyleSheet } from "react-native";
+import DropDownPicker from "react-native-dropdown-picker";
+import { Place } from "../../models/place";
+import Btn from "../UI/Btn";
+import ImagePicker from "./ImagePicker";
+import LocationPicker from "./LocationPicker";
 
 const PlacesForm = ({ onCreatePlace }) => {
-  const [enteredTitle, setEnteredTitle] = useState('');
-  const [enteredReview, setEnteredReview] = useState('');
-  const [imageData, setImageData] = useState('');
-  const [locationData, setLocationData] = useState('');
-  const [enteredType, setEnteredType] = useState('');
-  const [enteredStar, setEnteredStar] = useState('');
+  const [enteredTitle, setEnteredTitle] = useState("");
+  const [enteredReview, setEnteredReview] = useState("");
+  const [imageData, setImageData] = useState("");
+  const [locationData, setLocationData] = useState("");
+  const [enteredType, setEnteredType] = useState("");
+  const [enteredStar, setEnteredStar] = useState("★★★★");
 
   const [open, setOpen] = useState(false);
   const [starOpen, setStarOpen] = useState(false);
 
   const [items, setItems] = useState([
-    { label: '한식', value: '한식' },
-    { label: '중식', value: '중식' },
-    { label: '일식', value: '일식' },
-    { label: '양식', value: '양식' },
+    { label: "한식", value: "한식" },
+    { label: "중식", value: "중식" },
+    { label: "일식", value: "일식" },
+    { label: "양식", value: "양식" },
   ]);
   const [starItems, setStarItems] = useState([
-    { label: '★', value: '★' },
-    { label: '★★', value: '★★' },
-    { label: '★★★', value: '★★★' },
-    { label: '★★★★', value: '★★★★' },
-    { label: '★★★★★', value: '★★★★★' },
+    { label: "★", value: "★" },
+    { label: "★★", value: "★★" },
+    { label: "★★★", value: "★★★" },
+    { label: "★★★★", value: "★★★★" },
+    { label: "★★★★★", value: "★★★★★" },
   ]);
   const changeTitleHandler = (enteredTitle) => {
     setEnteredTitle(enteredTitle);
@@ -72,6 +72,7 @@ const PlacesForm = ({ onCreatePlace }) => {
           style={styles.input}
           onChangeText={changeTitleHandler}
           value={enteredTitle}
+          placeholder="맛집 이름을 입력해주세요"
         />
         <Text style={styles.label}>분류</Text>
         <DropDownPicker
@@ -81,9 +82,9 @@ const PlacesForm = ({ onCreatePlace }) => {
           setOpen={setOpen}
           setValue={setEnteredType}
           setItems={setItems}
-          placeholder="음식종류"
+          placeholder="음식종류를 골라주세요!"
           modalProps={{
-            animationType: 'fade',
+            animationType: "fade",
           }}
           listMode="SCROLLVIEW"
           modalTitle="선택해주세요."
@@ -106,9 +107,9 @@ const PlacesForm = ({ onCreatePlace }) => {
         setOpen={setStarOpen}
         setValue={setEnteredStar}
         setItems={setStarItems}
-        placeholder="별점"
+        placeholder="★★★"
         modalProps={{
-          animationType: 'fade',
+          animationType: "fade",
         }}
         listMode="SCROLLVIEW"
         modalTitle="선택해주세요."
@@ -124,15 +125,12 @@ const PlacesForm = ({ onCreatePlace }) => {
 export default PlacesForm;
 
 const styles = StyleSheet.create({
-  star: {
-    color: 'yellow',
-  },
   form: {
     flex: 1,
     padding: 24,
   },
   label: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 4,
   },
   input: {
@@ -141,14 +139,15 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     fontSize: 16,
     borderBottomWidth: 2,
-    borderBottomColor: 'blue',
+    borderBottomColor: "cornflowerblue",
   },
   Review: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 4,
     marginTop: 40,
   },
   btn: {
+    marginTop: 20,
     marginBottom: 50,
   },
 });
