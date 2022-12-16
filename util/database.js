@@ -15,7 +15,7 @@ export const init = () => {
             lat REAL NOT NULL,
             lng REAL NOT NULL,
             type TEXT NOT NULL,
-            star INTEGER NOT NULL,
+            star TEXT NOT NULL,
             review TEXT NOT NULL
         )`,
         [],

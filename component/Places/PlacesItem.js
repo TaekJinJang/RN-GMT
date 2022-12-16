@@ -8,9 +8,15 @@ const PlacesItem = ({ place, onSelect }) => {
     >
       <Image style={styles.image} source={{ uri: place.imageUri }} />
       <View style={styles.info}>
-        <Text style={styles.title}>{place.title}</Text>
+        <View style={styles.container}>
+          <Text style={styles.title}>{place.title}</Text>
+          <Text style={styles.type}>{place.type}</Text>
+        </View>
         <Text style={styles.address}>{place.address}</Text>
-        <Text>후기 : {place.review}</Text>
+        <Text style={styles.star}>{place.star}</Text>
+        <Text numberOfLines={1} ellipsizeMode="tail">
+          후기 : {place.review}
+        </Text>
       </View>
     </Pressable>
   );
@@ -38,17 +44,27 @@ const styles = StyleSheet.create({
     flex: 1,
     borderBottomLeftRadius: 4,
     borderTopLeftRadius: 4,
-    height: 100,
+    height: 115,
   },
   info: {
     flex: 2,
     padding: 12,
   },
+  container: { flex: 1, flexDirection: 'row' },
   title: {
+    flex: 1,
     fontWeight: 'bold',
     fontSize: 18,
     color: 'gray',
   },
+  type: {
+    alignItems: 'flex-end',
+    flex: 0.2,
+    fontWeight: 'bold',
+    fontSize: 13,
+    color: 'blue',
+  },
+  star: { fontWeight: 'bold', fontSize: 13, color: 'red' },
   address: {
     fontSize: 12,
     color: 'gary',

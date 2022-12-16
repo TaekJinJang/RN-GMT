@@ -1,20 +1,35 @@
-import { useCallback, useState } from "react";
-import { ScrollView, Text, TextInput, View, StyleSheet } from "react-native";
-// import {RNPickerSelect} from "react-native-picker-select";
-import { Picker } from "@react-native-picker/picker";
-import { Place } from "../../models/place";
-import Btn from "../UI/Btn";
-import ImagePicker from "./ImagePicker";
-import LocationPicker from "./LocationPicker";
+import { useCallback, useState } from 'react';
+import { ScrollView, Text, TextInput, View, StyleSheet } from 'react-native';
+import DropDownPicker from 'react-native-dropdown-picker';
+import { Place } from '../../models/place';
+import Btn from '../UI/Btn';
+import ImagePicker from './ImagePicker';
+import LocationPicker from './LocationPicker';
 
 const PlacesForm = ({ onCreatePlace }) => {
-  const [enteredTitle, setEnteredTitle] = useState("");
-  const [enteredReview, setEnteredReview] = useState("");
-  const [imageData, setImageData] = useState("");
-  const [locationData, setLocationData] = useState("");
-  const [enteredType, setEnteredType] = useState("");
-  const [enteredStar, setEnteredStar] = useState("");
-  const Type = ["한식", "중식", "일식", "양식"];
+  const [enteredTitle, setEnteredTitle] = useState('');
+  const [enteredReview, setEnteredReview] = useState('');
+  const [imageData, setImageData] = useState('');
+  const [locationData, setLocationData] = useState('');
+  const [enteredType, setEnteredType] = useState('');
+  const [enteredStar, setEnteredStar] = useState('');
+
+  const [open, setOpen] = useState(false);
+  const [starOpen, setStarOpen] = useState(false);
+
+  const [items, setItems] = useState([
+    { label: '한식', value: '한식' },
+    { label: '중식', value: '중식' },
+    { label: '일식', value: '일식' },
+    { label: '양식', value: '양식' },
+  ]);
+  const [starItems, setStarItems] = useState([
+    { label: '★', value: '★' },
+    { label: '★★', value: '★★' },
+    { label: '★★★', value: '★★★' },
+    { label: '★★★★', value: '★★★★' },
+    { label: '★★★★★', value: '★★★★★' },
+  ]);
   const changeTitleHandler = (enteredTitle) => {
     setEnteredTitle(enteredTitle);
   };
@@ -48,6 +63,7 @@ const PlacesForm = ({ onCreatePlace }) => {
     onCreatePlace(placeData);
   };
 
+  console.log(enteredStar);
   return (
     <ScrollView style={styles.form}>
       <View>
@@ -58,39 +74,20 @@ const PlacesForm = ({ onCreatePlace }) => {
           value={enteredTitle}
         />
         <Text style={styles.label}>분류</Text>
-        {/* <RNPickerSelect
-          value={Type}
-          onOpen={() => {
-            // 선택창이 열릴때
-            Keyboard.dismiss(); //키보드 내림
+        <DropDownPicker
+          open={open}
+          value={enteredType}
+          items={items}
+          setOpen={setOpen}
+          setValue={setEnteredType}
+          setItems={setItems}
+          placeholder="음식종류"
+          modalProps={{
+            animationType: 'fade',
           }}
-          onValueChange={(value, index) => {
-            setEnteredType(value);
-          }}
-          items={(() =>
-            //선택할수 있는 값들
-            this.state.sdList.map((sd) => ({
-              // state에 저장한 리스트를 불러와 label 값과 value 값을 준다.
-              label: sd,
-              value: sd,
-            })))()}
-          useNativeAndroidPickerStyle={false} // 안드로이드 기본 스타일을 사용할 것인지
-          placeholder={{
-            // 값이 없을때 보일 값, 없어도 된다면 이 안의 내용을 지운다. placeholder={{}} 이건 남겨둠.. 이부분까지 지우면 기본값으로 설정됨.
-            label: "종류",
-            value: null,
-          }}
-          style={{
-            // 스타일은 아래 3가지로 나누어 적용한다
-            placeholder: style.sel_placeholder,
-            inputAndroid: style.sel_inputAnd,
-            inputIOS: style.sel_inputIOS,
-          }}
-        /> */}
-        <Picker>
-          <Picker.Item label="Java" value="java" />
-          <Picker.Item label="JavaScript" value="js" />
-        </Picker>
+          listMode="SCROLLVIEW"
+          modalTitle="선택해주세요."
+        />
       </View>
       <ImagePicker onImageData={imageDataHandler} />
       <LocationPicker onLocationData={locationDataHandler} />
@@ -100,6 +97,23 @@ const PlacesForm = ({ onCreatePlace }) => {
         onChangeText={changeReviewHandler}
         value={enteredReview}
       />
+      <Text style={styles.Review}>별점</Text>
+      <DropDownPicker
+        style={styles.star}
+        open={starOpen}
+        value={enteredStar}
+        items={starItems}
+        setOpen={setStarOpen}
+        setValue={setEnteredStar}
+        setItems={setStarItems}
+        placeholder="별점"
+        modalProps={{
+          animationType: 'fade',
+        }}
+        listMode="SCROLLVIEW"
+        modalTitle="선택해주세요."
+      />
+
       <View style={styles.btn}>
         <Btn onPress={savePlaceHandler}>맛집 추가하기</Btn>
       </View>
@@ -110,12 +124,15 @@ const PlacesForm = ({ onCreatePlace }) => {
 export default PlacesForm;
 
 const styles = StyleSheet.create({
+  star: {
+    color: 'yellow',
+  },
   form: {
     flex: 1,
     padding: 24,
   },
   label: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 4,
   },
   input: {
@@ -124,10 +141,10 @@ const styles = StyleSheet.create({
     paddingVertical: 8,
     fontSize: 16,
     borderBottomWidth: 2,
-    borderBottomColor: "blue",
+    borderBottomColor: 'blue',
   },
   Review: {
-    fontWeight: "bold",
+    fontWeight: 'bold',
     marginBottom: 4,
     marginTop: 40,
   },
