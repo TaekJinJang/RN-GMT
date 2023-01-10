@@ -35,7 +35,7 @@ GPS를 활용하여 위치정보 제공 및 사용자와의 위치 비교, 사�
 - 사진은 갤러리 권한을 얻어 갤러리에서 가져오고 위치 권한을 얻어 내 위치 찾기를 누를 시 현 위치 마커를 가져오게끔 설계
 
   <p align='center'>
- <img src="https://velog.velcdn.com/images/taek_jini/post/7649cb8d-1f4f-49e7-9957-01fda4e87c6e/image.png")
+ <img src="https://user-images.githubusercontent.com/93184838/211484222-67ec2610-0b25-4375-81c9-ccccd954a271.png")
   </p>
 
 
