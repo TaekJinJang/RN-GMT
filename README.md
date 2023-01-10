@@ -26,13 +26,14 @@ GPS를 활용하여 위치정보 제공 및 사용자와의 위치 비교, 사�
 - Google Map API를 통해 전세계 지도를 보여줌
 - 클릭 시 마커가 생기고 맛집을 추가할 때 사용할 수 있음
 - 본인 위치를 찾는 버튼과 마커를 맛집위치로 생성하는 버튼 구현
-<p align='center'>
+ <p align='center'>
  <img src="https://velog.velcdn.com/images/taek_jini/post/36287171-7a88-4116-97d1-b9216a5cbfbe/image.png")
-  </p>
+ </p>
 
 #### 맛집추가 페이지
 - 이름,음식종류,사진(갤러리 연동), 위치,후기,별점 등을 기입하여 맛집을 추가할 수 있음
 - 사진은 갤러리 권한을 얻어 갤러리에서 가져오고 위치 권한을 얻어 내 위치 찾기를 누를 시 현 위치 마커를 가져오게끔 설계
+
   <p align='center'>
  <img src="https://velog.velcdn.com/images/taek_jini/post/7649cb8d-1f4f-49e7-9957-01fda4e87c6e/image.png")
   </p>
